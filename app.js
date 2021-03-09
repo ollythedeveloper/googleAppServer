@@ -18,7 +18,7 @@ app.get('/apps', (req, res) => {
         }
     }
     if(genre) {
-        if(!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'].includes(genre)) {
+        if(!['action', 'puzzle', 'strategy', 'casual', 'arcade', 'card'].includes(genre)) {
             return res
                 .status(400)
                 .send('Genre must be one of Action, Puzzle, Strategy, Casual, Arcade or Card');
@@ -39,8 +39,7 @@ app.get('/apps', (req, res) => {
             .filter(gApp =>
                 gApp
                     .Genres
-                    .toLocaleLowerCase()
-                    .includes(genre.toLocaleLowerCase()));
+                    .includes(genre));
     }
 
     res.json(results);
