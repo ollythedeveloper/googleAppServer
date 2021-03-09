@@ -39,12 +39,11 @@ app.get('/apps', (req, res) => {
             .filter(gApp =>
                 gApp
                     .Genres
-                    .includes(genre));
+                    .toLocaleLowerCase()
+                    .includes(genre.toLocaleLowerCase()));
     }
 
     res.json(results);
 });
 
-app.listen(8000, () => {
-    console.log('Server started on PORT 8000');
-})
+module.exports = app;
