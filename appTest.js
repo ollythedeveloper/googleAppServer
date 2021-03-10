@@ -1,3 +1,4 @@
+//TEST FILE!! :)
 const express = require('express');
 const morgan = require('morgan');
 
@@ -9,6 +10,8 @@ const googleApps = require('./playstore.js');
 
 app.get('/apps', (req, res) => {
     const { sort, genre } = req.query;
+    const lowGenre = genre.toLocaleLowerCase();
+    console.log(lowGenre)
 
     if(sort) {
         if(!['Rating', 'App'].includes(sort)) {
@@ -17,8 +20,8 @@ app.get('/apps', (req, res) => {
                 .send('Sort must be one of App or Rating');
         }
     }
-    if(genre) {
-        if(!['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'].includes(genre)) {
+    if(lowGenre) {
+        if(!['action', 'puzzle', 'strategy', 'casual', 'arcade', 'card'].includes(lowGenre)) {
             return res
                 .status(400)
                 .send('Genre must be one of Action, Puzzle, Strategy, Casual, Arcade or Card');
@@ -34,12 +37,12 @@ app.get('/apps', (req, res) => {
             });
     }
 
-    if(genre) {
+    if(lowGenre) {
         results = googleApps
             .filter(gApp =>
                 gApp
                     .Genres
-                    .includes(genre));
+                    .includes(lowGenre));
     }
 
     res.json(results);
